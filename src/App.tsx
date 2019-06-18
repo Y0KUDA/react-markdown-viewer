@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Remarkable from "remarkable";
 
 const App: React.FC = () => {
+  const [input, updateInput] = useState("# howdy.\nInput your markdown.");
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h3>Input Markdown</h3>
+      <textarea
+        id="markdown-content"
+        onChange={(e: any) => {
+          updateInput(e.target.value);
+        }}
+        defaultValue={input}
+      />
+
+      <h3>Output</h3>
+      <div
+        className="md"
+        dangerouslySetInnerHTML={{__html:new Remarkable().render(input)}}
+      />
     </div>
   );
-}
+};
 
 export default App;
